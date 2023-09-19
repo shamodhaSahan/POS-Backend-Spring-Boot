@@ -3,9 +3,11 @@ package lk.ijse.pos.util;
 import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.ItemDTO;
 import lk.ijse.pos.dto.OrderDTO;
+import lk.ijse.pos.dto.OrderDetailsDTO;
 import lk.ijse.pos.entity.Customer;
 import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.entity.Order;
+import lk.ijse.pos.entity.OrderDetails;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +41,11 @@ public class DataTypeConvertor {
     }
     public Order getOrderEntity(OrderDTO orderDTO){
         return modelMapper.map(orderDTO, Order.class);
+    }
+    public OrderDetailsDTO getOrderDetailsDTO(OrderDetails orderDetails){
+        return modelMapper.map(orderDetails, OrderDetailsDTO.class);
+    }
+    public OrderDetails getOrderDetails(OrderDetailsDTO orderDetailsDTO){
+        return modelMapper.map(orderDetailsDTO, OrderDetails.class);
     }
 }
