@@ -1,6 +1,7 @@
 package lk.ijse.pos.persistance;
 
 import lk.ijse.pos.entity.Customer;
+import lk.ijse.pos.entity.Order;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
