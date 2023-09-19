@@ -2,6 +2,7 @@ package lk.ijse.pos.api;
 
 import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.service.CustomerService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.saveCustomer(customerDto),HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> getAllCustomer(){
         return new ResponseEntity<>(customerService.getAllCustomer(),HttpStatus.OK);
     }
