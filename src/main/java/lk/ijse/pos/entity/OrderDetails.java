@@ -31,11 +31,11 @@ public class OrderDetails implements SuperEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "orderId", referencedColumnName = "orderId", insertable = false, updatable = false)
     private Order order;
 
 
     @ManyToOne
-    @JoinColumn(name = "itemCode")
+    @JoinColumn(name = "itemCode", referencedColumnName = "itemCode", insertable = false, updatable = false)
     private Item item;
 }

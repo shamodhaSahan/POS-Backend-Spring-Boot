@@ -1,10 +1,7 @@
 package lk.ijse.pos.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 public class Customer implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

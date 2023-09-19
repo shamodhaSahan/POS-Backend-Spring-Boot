@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString(exclude = "orderDetails")
 @Entity(name = "orders")
 public class Order implements SuperEntity {
     @Id
@@ -30,7 +32,7 @@ public class Order implements SuperEntity {
 
     @OneToMany(
             mappedBy = "order",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
     private List<OrderDetails> orderDetails;
