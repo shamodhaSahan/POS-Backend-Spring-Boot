@@ -4,6 +4,7 @@ import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,15 +26,14 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDto) {
-        return customerService.saveCustomer(customerDto);
+    ResponseEntity<?> saveCustomer(@RequestBody CustomerDTO customerDto) {
+        return new ResponseEntity<>(customerService.saveCustomer(customerDto),HttpStatus.CREATED);
     }
 
     @GetMapping
-    List<CustomerDTO> getAllCustomer(){
-        return customerService.getAllCustomer();
+    ResponseEntity<?> getAllCustomer(){
+        return new ResponseEntity<>(customerService.getAllCustomer(),HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
