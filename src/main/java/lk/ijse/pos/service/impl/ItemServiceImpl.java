@@ -1,6 +1,13 @@
 package lk.ijse.pos.service.impl;
 
 import lk.ijse.pos.dto.ItemDTO;
+import lk.ijse.pos.entity.Customer;
+import lk.ijse.pos.entity.Item;
+import lk.ijse.pos.exception.DuplicateException;
+import lk.ijse.pos.exception.InUseException;
+import lk.ijse.pos.exception.NotFoundException;
+import lk.ijse.pos.persistance.ItemDao;
+import lk.ijse.pos.persistance.OrderDetailsDao;
 import lk.ijse.pos.service.ItemService;
 import lk.ijse.pos.util.DataTypeConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created By shamodha_s_rathnamalala
@@ -20,30 +28,53 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
-    DataTypeConvertor conversion;
+    DataTypeConvertor convertor;
+    @Autowired
+    ItemDao itemDao;
+    @Autowired
+    OrderDetailsDao orderDetailsDao;
 
     @Override
     public ItemDTO getItemByCode(String code) {
-        return null;
+        return convertor.getItemDTO(itemDao.findById(code).orElseThrow(() -> new NotFoundException("Item not found..!")));
     }
 
     @Override
     public ItemDTO saveItem(ItemDTO itemDTO) {
-        return null;
+        if (itemDao.findByDescription(itemDTO.getDescription()).isPresent())
+            throw new DuplicateException("Item description is duplicated..!");
+        return convertor.getItemDTO(itemDao.save(convertor.getItemEntity(itemDTO)));
+
     }
 
     @Override
     public void updateItem(ItemDTO itemDTO) {
-
+        itemDao.findByDescription(itemDTO.getDescription()).filter(itemForCheckDescription -> !itemForCheckDescription.getItemCode().equals(itemDTO.getItemCode())).ifPresentOrElse(__ -> {
+            throw new DuplicateException("Item description is duplicated..!");
+        }, () -> {
+            itemDao.findById(itemDTO.getItemCode()).ifPresentOrElse(item -> {
+                item.setDescription(itemDTO.getDescription());
+                item.setQtyOnHand(itemDTO.getQtyOnHand());
+                item.setUnitPrice(itemDTO.getUnitPrice());
+            }, () -> {
+                throw new NotFoundException("Item not found..!");
+            });
+        });
     }
 
     @Override
     public void deleteItemByCode(String code) {
-
+        itemDao.findById(code).ifPresentOrElse(item -> orderDetailsDao.findOrderDetailsByItem(item).ifPresentOrElse(__ -> {
+            throw new InUseException("Item have orders..!");
+        }, () -> {
+            itemDao.delete(item);
+        }), () -> {
+            throw new NotFoundException("Item not found..!");
+        });
     }
 
     @Override
     public List<ItemDTO> getAllItem() {
-        return null;
+        return ((List<Item>) itemDao.findAll()).stream().map(item -> convertor.getItemDTO(item)).collect(Collectors.toList());
     }
 }
