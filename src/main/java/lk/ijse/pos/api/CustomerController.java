@@ -37,19 +37,21 @@ public class CustomerController {
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    CustomerDTO getSelectedCustomer(@PathVariable String id) {
-        return customerService.getCustomerById(id);
+    ResponseEntity<?> getSelectedCustomer(@PathVariable String id) {
+        return new ResponseEntity<>(customerService.getCustomerById(id),HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{id}")
-    void deleteCustomer(@PathVariable String id) {
+    ResponseEntity<?> deleteCustomer(@PathVariable String id) {
         customerService.deleteCustomerById(id);
+        return new ResponseEntity<>("Customer "+id+" is deleted",HttpStatus.OK);
     }
 
     @PatchMapping(value = "{id}")
-    void updateCustomer(@PathVariable String id, @RequestBody CustomerDTO customer) {
+    ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerDTO customer) {
         //ToDo: Error handling
         customer.setId(id);
         customerService.updateCustomer(customer);
+        return new ResponseEntity<>("Customer "+id+" is updated",HttpStatus.OK);
     }
 }
