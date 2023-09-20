@@ -1,6 +1,8 @@
 
 # Spring Boot Application
 
+<p align="center"><img src="https://socialify.git.ci/shamodhaSahan/POS-Backend-Spring-Boot/image?language=1&amp;name=1&amp;owner=1&amp;theme=Light" alt="project-image"></p>
+
 This is a restful api for pos system
 
 <div align="center">
@@ -13,6 +15,15 @@ This is a restful api for pos system
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/117533873-484d4480-afef-11eb-9fad-67c8605e3592.png" alt="JUnit" title="JUnit"/></code>
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183896128-ec99105a-ec1a-4d85-b08b-1aa1620b2046.png" alt="MySQL" title="MySQL"/></code>
 </div>
+
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="15" /> Java 
+*   <img width="15" src="https://user-images.githubusercontent.com/25181517/183891303-41f257f8-6b3d-487c-aa56-c497b880d0fb.png" alt="Spring Boot" title="Spring Boot"/> Spring Boot
+*   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="15" /> MySql
+*   <img width="15" src="https://user-images.githubusercontent.com/25181517/117207493-49665200-adf4-11eb-808e-a9c0fcc2a0a0.png" alt="Hibernate" title="Hibernate"/> Hibernate 
 
 ## Customer API Reference
 
