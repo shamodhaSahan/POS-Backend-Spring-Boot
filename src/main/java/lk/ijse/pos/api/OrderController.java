@@ -29,6 +29,7 @@ public class OrderController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> saveOrder(@RequestBody OrderDTO orderDTO) {
+        System.out.println(orderDTO.getOrderDetailsList().size());
         regexValidator.orderValidation(orderDTO);
         return new ResponseEntity<>(orderService.saveOrder(orderDTO), HttpStatus.CREATED);
     }
