@@ -26,7 +26,7 @@ public class Order implements SuperEntity {
     @Column(nullable = false)
     private LocalDate date;
 
-    @ManyToOne//(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
