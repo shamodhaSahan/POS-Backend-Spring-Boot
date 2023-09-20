@@ -48,12 +48,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO saveOrder(OrderDTO orderDTO) {
-        orderDTO.getOrderDetailsList().forEach(orderDetailsDTO -> {
-            itemDao.findById(orderDetailsDTO.getItemCode()).ifPresentOrElse(item -> {
-                item.setQtyOnHand(item.getQtyOnHand() - orderDetailsDTO.getQty());
-            }, () -> {
-                throw new NotFoundException("Item not found..!");
+        customerDao.findById(orderDTO.getCustomerId()).ifPresentOrElse(customer -> {
+            orderDTO.getOrderDetailsList().forEach(orderDetailsDTO -> {
+                itemDao.findById(orderDetailsDTO.getItemCode()).ifPresentOrElse(item -> item.setQtyOnHand(item.getQtyOnHand() - orderDetailsDTO.getQty()), () -> {
+                    throw new NotFoundException("Item not found..!");
+                });
             });
+        }, () -> {
+            throw new NotFoundException("Customer not found..!");
         });
         return convertor.getOrderDTO(orderDao.save(convertor.getOrderEntity(orderDTO)));
     }
