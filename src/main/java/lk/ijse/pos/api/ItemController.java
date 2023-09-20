@@ -51,7 +51,7 @@ public class ItemController {
     @PatchMapping(value = "{code}")
     ResponseEntity<?> updateItem(@PathVariable String code, @RequestBody ItemDTO itemDTO) {
         regexValidator.itemValidation(itemDTO);
-        itemDTO.setItemCode(code);
+        itemDTO.setCode(code);
         itemService.updateItem(itemDTO);
         return new ResponseEntity<>("Item " + code + " is updated", HttpStatus.OK);
     }

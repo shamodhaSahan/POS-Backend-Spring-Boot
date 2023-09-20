@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 public class ItemDTO {
-    private String itemCode;
+    private String code;
     private String description;
     private int qtyOnHand;
     private BigDecimal unitPrice;

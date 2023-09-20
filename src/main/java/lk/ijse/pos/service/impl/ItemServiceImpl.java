@@ -50,10 +50,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateItem(ItemDTO itemDTO) {
-        itemDao.findByDescription(itemDTO.getDescription()).filter(itemForCheckDescription -> !itemForCheckDescription.getItemCode().equals(itemDTO.getItemCode())).ifPresentOrElse(__ -> {
+        itemDao.findByDescription(itemDTO.getDescription()).filter(itemForCheckDescription -> !itemForCheckDescription.getCode().equals(itemDTO.getCode())).ifPresentOrElse(__ -> {
             throw new DuplicateException("Item description is duplicated..!");
         }, () -> {
-            itemDao.findById(itemDTO.getItemCode()).ifPresentOrElse(item -> {
+            itemDao.findById(itemDTO.getCode()).ifPresentOrElse(item -> {
                 item.setDescription(itemDTO.getDescription());
                 item.setQtyOnHand(itemDTO.getQtyOnHand());
                 item.setUnitPrice(itemDTO.getUnitPrice());

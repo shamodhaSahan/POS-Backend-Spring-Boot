@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -36,6 +35,6 @@ public class OrderDetails implements SuperEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "itemCode", referencedColumnName = "itemCode", insertable = false, updatable = false)
+    @JoinColumn(name = "code", referencedColumnName = "code", insertable = false, updatable = false)
     private Item item;
 }
