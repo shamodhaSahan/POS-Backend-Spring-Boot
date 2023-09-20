@@ -1,11 +1,8 @@
 package lk.ijse.pos.service.impl;
 
-import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.OrderDTO;
-import lk.ijse.pos.entity.Customer;
 import lk.ijse.pos.entity.Order;
 import lk.ijse.pos.entity.OrderItemPK;
-import lk.ijse.pos.exception.DuplicateException;
 import lk.ijse.pos.exception.InvalidException;
 import lk.ijse.pos.exception.NotFoundException;
 import lk.ijse.pos.persistance.CustomerDao;
@@ -30,17 +27,19 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+    private final DataTypeConvertor convertor;
+    @Autowired
+    private OrderDao orderDao;
+    @Autowired
+    private OrderDetailsDao orderDetailsDao;
+    @Autowired
+    private CustomerDao customerDao;
+    @Autowired
+    private ItemDao itemDao;
 
-    @Autowired
-    DataTypeConvertor convertor;
-    @Autowired
-    OrderDao orderDao;
-    @Autowired
-    OrderDetailsDao orderDetailsDao;
-    @Autowired
-    CustomerDao customerDao;
-    @Autowired
-    ItemDao itemDao;
+    public OrderServiceImpl(DataTypeConvertor convertor) {
+        this.convertor = convertor;
+    }
 
     @Override
     public OrderDTO getOrderById(String id) {
@@ -53,9 +52,8 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.getOrderDetails().forEach(orderDetailsDTO -> {
                 itemDao.findById(orderDetailsDTO.getItemCode()).ifPresentOrElse(item -> {
                     int qty = item.getQtyOnHand() - orderDetailsDTO.getQty();
-                    if (qty<0)throw new InvalidException("Not enough quantity");
+                    if (qty < 0) throw new InvalidException("Not enough quantity");
                     item.setQtyOnHand(qty);
-//                    orderDetailsDTO.setUnitPrice(item.getUnitPrice());
                 }, () -> {
                     throw new NotFoundException("Item not found..!");
                 });

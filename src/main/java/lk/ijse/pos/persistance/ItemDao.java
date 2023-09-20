@@ -2,6 +2,7 @@ package lk.ijse.pos.persistance;
 
 import lk.ijse.pos.entity.Item;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
  * Time : 11:38 PM
  */
 
+@Repository
 public interface ItemDao extends CrudRepository<Item, String> {
     Optional<Item> findByDescription(String description);
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -26,13 +25,16 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
+    private final DataTypeConvertor convertor;
+    @Autowired
+    private CustomerDao customerDao;
+    @Autowired
+    private OrderDao orderDao;
 
-    @Autowired
-    DataTypeConvertor convertor;
-    @Autowired
-    CustomerDao customerDao;
-    @Autowired
-    OrderDao orderDao;
+    public CustomerServiceImpl(DataTypeConvertor convertor) {
+        this.convertor = convertor;
+    }
+
 
     @Override
     public CustomerDTO getCustomerById(String id) {

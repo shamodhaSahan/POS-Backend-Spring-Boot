@@ -3,6 +3,7 @@ package lk.ijse.pos.persistance;
 import lk.ijse.pos.entity.Customer;
 import lk.ijse.pos.entity.Order;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
  * Time : 11:38 PM
  */
 
+@Repository
 public interface OrderDao extends CrudRepository<Order, String> {
     Optional<Order> findOrderByCustomer(Customer customer);
 }

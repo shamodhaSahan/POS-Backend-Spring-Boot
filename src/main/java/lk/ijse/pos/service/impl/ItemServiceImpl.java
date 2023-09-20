@@ -1,7 +1,6 @@
 package lk.ijse.pos.service.impl;
 
 import lk.ijse.pos.dto.ItemDTO;
-import lk.ijse.pos.entity.Customer;
 import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.exception.DuplicateException;
 import lk.ijse.pos.exception.InUseException;
@@ -26,13 +25,15 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ItemServiceImpl implements ItemService {
+    private final DataTypeConvertor convertor;
+    @Autowired
+    private ItemDao itemDao;
+    @Autowired
+    private OrderDetailsDao orderDetailsDao;
 
-    @Autowired
-    DataTypeConvertor convertor;
-    @Autowired
-    ItemDao itemDao;
-    @Autowired
-    OrderDetailsDao orderDetailsDao;
+    public ItemServiceImpl(DataTypeConvertor convertor) {
+        this.convertor = convertor;
+    }
 
     @Override
     public ItemDTO getItemByCode(String code) {

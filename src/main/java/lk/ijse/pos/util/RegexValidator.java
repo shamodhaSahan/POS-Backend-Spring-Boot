@@ -31,7 +31,6 @@ public class RegexValidator {
     public void customerValidation(CustomerDTO customerDTO) {
         if (customerDTO.getNic() == null || !nicPattern.matcher(customerDTO.getNic()).matches())
             throw new InvalidException("Invalid nic");
-        ;
         if (customerDTO.getName() == null || !namePattern.matcher(customerDTO.getName()).matches())
             throw new InvalidException("Invalid name");
         if (customerDTO.getSalary() == null || !pricePattern.matcher(customerDTO.getSalary().toString()).matches())
