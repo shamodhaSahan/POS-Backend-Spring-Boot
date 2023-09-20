@@ -6,6 +6,7 @@ import lk.ijse.pos.entity.Customer;
 import lk.ijse.pos.entity.Order;
 import lk.ijse.pos.entity.OrderItemPK;
 import lk.ijse.pos.exception.DuplicateException;
+import lk.ijse.pos.exception.InvalidException;
 import lk.ijse.pos.exception.NotFoundException;
 import lk.ijse.pos.persistance.CustomerDao;
 import lk.ijse.pos.persistance.ItemDao;
@@ -49,8 +50,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO saveOrder(OrderDTO orderDTO) {
         customerDao.findById(orderDTO.getCustomerId()).ifPresentOrElse(customer -> {
-            orderDTO.getOrderDetailsList().forEach(orderDetailsDTO -> {
-                itemDao.findById(orderDetailsDTO.getItemCode()).ifPresentOrElse(item -> item.setQtyOnHand(item.getQtyOnHand() - orderDetailsDTO.getQty()), () -> {
+            orderDTO.getOrderDetails().forEach(orderDetailsDTO -> {
+                itemDao.findById(orderDetailsDTO.getItemCode()).ifPresentOrElse(item -> {
+                    int qty = item.getQtyOnHand() - orderDetailsDTO.getQty();
+                    if (qty<0)throw new InvalidException("Not enough quantity");
+                    item.setQtyOnHand(qty);
+//                    orderDetailsDTO.setUnitPrice(item.getUnitPrice());
+                }, () -> {
                     throw new NotFoundException("Item not found..!");
                 });
             });
@@ -66,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
             customerDao.findById(orderDTO.getCustomerId()).ifPresentOrElse(customer -> {
                 order.setDate(orderDTO.getDate());
                 order.setCustomer(customer);
-                orderDTO.getOrderDetailsList().forEach(orderDetailsDTO -> {
+                orderDTO.getOrderDetails().forEach(orderDetailsDTO -> {
                     orderDetailsDao.findById(new OrderItemPK(orderDetailsDTO.getOrderId(), orderDetailsDTO.getItemCode())).ifPresentOrElse(orderDetails -> {
                         orderDetails.setQty(orderDetailsDTO.getQty());
                         orderDetails.setUnitPrice(orderDetailsDTO.getUnitPrice());

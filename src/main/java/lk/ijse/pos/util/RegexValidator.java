@@ -52,6 +52,6 @@ public class RegexValidator {
             throw new InvalidException("Invalid order id");
         if (orderDTO.getDate() == null) throw new InvalidException("Invalid  date");
         if (orderDTO.getCustomerId() == null) throw new InvalidException("Invalid customer id");
-        if (orderDTO.getOrderDetailsList().size() == 0) throw new InvalidException("Order details empty");
+        if (orderDTO.getOrderDetails().size() == 0) throw new InvalidException("Order details empty");
     }
 }

@@ -21,5 +21,5 @@ public class OrderDTO {
     private String orderId;
     private LocalDate date;
     private String customerId;
-    private List<OrderDetailsDTO> orderDetailsList = new ArrayList<>();
+    private List<OrderDetailsDTO> orderDetails = new ArrayList<>();
 }
