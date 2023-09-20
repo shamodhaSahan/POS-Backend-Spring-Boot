@@ -97,7 +97,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getAllOrder() {
+    public List<OrderDTO> getAllOrders() {
         return ((List<Order>) orderDao.findAll()).stream().map(order -> convertor.getOrderDTO(order)).collect(Collectors.toList());
     }
 }

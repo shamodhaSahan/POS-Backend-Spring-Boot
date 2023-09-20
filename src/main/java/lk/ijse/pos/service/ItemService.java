@@ -14,5 +14,5 @@ public interface ItemService {
     ItemDTO saveItem(ItemDTO itemDTO);
     void updateItem(ItemDTO itemDTO);
     void deleteItemByCode(String code);
-    List<ItemDTO> getAllItem();
+    List<ItemDTO> getAllItems();
 }

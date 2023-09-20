@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDTO> getAllItem() {
+    public List<ItemDTO> getAllItems() {
         return ((List<Item>) itemDao.findAll()).stream().map(item -> convertor.getItemDTO(item)).collect(Collectors.toList());
     }
 }

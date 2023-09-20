@@ -1,6 +1,5 @@
 package lk.ijse.pos.api;
 
-import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.ItemDTO;
 import lk.ijse.pos.service.ItemService;
 import lk.ijse.pos.util.RegexValidator;
@@ -34,8 +33,8 @@ public class ItemController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getAllItem() {
-        return new ResponseEntity<>(itemService.getAllItem(), HttpStatus.OK);
+    ResponseEntity<?> getAllItems() {
+        return new ResponseEntity<>(itemService.getAllItems(), HttpStatus.OK);
     }
 
     @GetMapping(value = "{code}", produces = MediaType.APPLICATION_JSON_VALUE)

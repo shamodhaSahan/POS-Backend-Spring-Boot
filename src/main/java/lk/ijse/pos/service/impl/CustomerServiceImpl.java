@@ -74,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDTO> getAllCustomer() {
+    public List<CustomerDTO> getAllCustomers() {
         return ((List<Customer>) customerDao.findAll()).stream().map(customer -> convertor.getCustomerDTO(customer)).collect(Collectors.toList());
     }
 }

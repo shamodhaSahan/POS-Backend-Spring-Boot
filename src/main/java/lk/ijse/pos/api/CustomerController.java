@@ -1,7 +1,6 @@
 package lk.ijse.pos.api;
 
 import lk.ijse.pos.dto.CustomerDTO;
-import lk.ijse.pos.exception.InvalidException;
 import lk.ijse.pos.service.CustomerService;
 import lk.ijse.pos.util.RegexValidator;
 import org.springframework.http.HttpStatus;
@@ -34,8 +33,8 @@ public class CustomerController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getAllCustomer() {
-        return new ResponseEntity<>(customerService.getAllCustomer(), HttpStatus.OK);
+    ResponseEntity<?> getAllCustomers() {
+        return new ResponseEntity<>(customerService.getAllCustomers(), HttpStatus.OK);
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)

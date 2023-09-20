@@ -34,7 +34,26 @@ public class OrderController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> getAllOrder() {
-        return new ResponseEntity<>(customerService.getAllCustomer(), HttpStatus.OK);
+    ResponseEntity<?> getAllOrders() {
+        return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> getSelectedOrder(@PathVariable String orderId) {
+        return new ResponseEntity<>(orderService.getOrderById(orderId), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "{orderId}")
+    ResponseEntity<?> deleteCustomer(@PathVariable String orderId) {
+        orderService.deleteOrderById(orderId);
+        return new ResponseEntity<>("Order " + orderId + " is deleted", HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "{orderId}")
+    ResponseEntity<?> updateCustomer(@PathVariable String orderId, @RequestBody OrderDTO orderDTO) {
+        regexValidator.orderValidation(orderDTO);
+        orderDTO.setOrderId(orderId);
+        orderService.updateOrder(orderDTO);
+        return new ResponseEntity<>("Order " + orderId + " is updated", HttpStatus.OK);
     }
 }

@@ -14,5 +14,5 @@ public interface OrderService {
     OrderDTO saveOrder(OrderDTO orderDTO);
     void updateOrder(OrderDTO orderDTO);
     void deleteOrderById(String id);
-    List<OrderDTO> getAllOrder();
+    List<OrderDTO> getAllOrders();
 }
