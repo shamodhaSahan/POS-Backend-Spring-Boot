@@ -1,9 +1,13 @@
-
-# Spring Boot Application
+# Point of sales system backend
+### POS system Restful API
+#### Spring Boot Application
 
 <p align="center"><img src="https://socialify.git.ci/shamodhaSahan/POS-Backend-Spring-Boot/image?language=1&amp;name=1&amp;owner=1&amp;theme=Light" alt="project-image"></p>
 
 This is a restful api for pos system
+
+API to manage orders customers items and use mysql database to save data for long term
+
 
 <div align="center">
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/192107858-fe19f043-c502-4009-8c47-476fc89718ad.png" alt="REST" title="REST"/></code>
