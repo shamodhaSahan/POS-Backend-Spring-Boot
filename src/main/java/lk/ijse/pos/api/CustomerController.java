@@ -1,11 +1,15 @@
 package lk.ijse.pos.api;
 
+import jakarta.validation.Valid;
 import lk.ijse.pos.dto.CustomerDTO;
+import lk.ijse.pos.exception.InvalidException;
 import lk.ijse.pos.service.CustomerService;
 import lk.ijse.pos.util.RegexValidator;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,8 +31,9 @@ public class CustomerController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> saveCustomer(@RequestBody CustomerDTO customerDTO) {
-        regexValidator.customerValidation(customerDTO);
+    ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerDTO customerDTO, Errors errors) {
+        if (errors.hasFieldErrors())
+            throw new InvalidException(errors.getFieldErrors().get(0).getDefaultMessage());
         return new ResponseEntity<>(customerService.saveCustomer(customerDTO), HttpStatus.CREATED);
     }
 
@@ -49,8 +54,9 @@ public class CustomerController {
     }
 
     @PatchMapping(value = "{id}")
-    ResponseEntity<?> updateCustomer(@PathVariable String id, @RequestBody CustomerDTO customerDTO) {
-        regexValidator.customerValidation(customerDTO);
+    ResponseEntity<?> updateCustomer(@PathVariable String id, @Valid @RequestBody CustomerDTO customerDTO, Errors errors) {
+        if (errors.hasFieldErrors())
+            throw new InvalidException(errors.getFieldErrors().get(0).getDefaultMessage());
         customerDTO.setId(id);
         customerService.updateCustomer(customerDTO);
         return new ResponseEntity<>("Customer " + id + " is updated", HttpStatus.OK);

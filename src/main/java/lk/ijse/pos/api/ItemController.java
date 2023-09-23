@@ -1,11 +1,14 @@
 package lk.ijse.pos.api;
 
+import jakarta.validation.Valid;
 import lk.ijse.pos.dto.ItemDTO;
+import lk.ijse.pos.exception.InvalidException;
 import lk.ijse.pos.service.ItemService;
 import lk.ijse.pos.util.RegexValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,8 +30,9 @@ public class ItemController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> saveItem(@RequestBody ItemDTO itemDTO) {
-        regexValidator.itemValidation(itemDTO);
+    ResponseEntity<?> saveItem(@Valid @RequestBody ItemDTO itemDTO, Errors errors) {
+        if (errors.hasFieldErrors())
+            throw new InvalidException(errors.getFieldErrors().get(0).getDefaultMessage());
         return new ResponseEntity<>(itemService.saveItem(itemDTO), HttpStatus.CREATED);
     }
 
@@ -49,8 +53,9 @@ public class ItemController {
     }
 
     @PatchMapping(value = "{code}")
-    ResponseEntity<?> updateItem(@PathVariable String code, @RequestBody ItemDTO itemDTO) {
-        regexValidator.itemValidation(itemDTO);
+    ResponseEntity<?> updateItem(@PathVariable String code, @Valid @RequestBody ItemDTO itemDTO, Errors errors) {
+        if (errors.hasFieldErrors())
+            throw new InvalidException(errors.getFieldErrors().get(0).getDefaultMessage());
         itemDTO.setCode(code);
         itemService.updateItem(itemDTO);
         return new ResponseEntity<>("Item " + code + " is updated", HttpStatus.OK);
