@@ -158,15 +158,23 @@ Technologies used in the project:
   GET api/v1/order
 ```
 
+#### Get all item
+
+```http
+  GET api/v1/item
+```
+
 order
-| Parameter | Type | Example |
-| :-------- | :------- | :------------------------- |
-| `orderId` | `string` | **O001** |
-| `date` | `LocalDate` | **2023-01-01** |
-| `customerId` | `string` | ****valid customer's id Only. |
-| `orderDetails` | `list of json` | **order Details object list**. |
+
+| Parameter | Type | Example                            |
+| :-------- | :------- |:-----------------------------------|
+| `orderId` | `string` | **O001**                           |
+| `date` | `LocalDate` | **2023-01-01**                     |
+| `customerId` | `string` | ****valid customer's id Only.      |
+| `orderDetails` | `list of json` | **order Details object list**.     |
 
 orderDetails
+
 | Parameter | Type | Example |
 | :-------- | :------- | :------------------------- |
 | `orderId` | `string` | **O001** |
