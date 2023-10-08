@@ -1,16 +1,17 @@
 package lk.ijse.pos.api;
 
 import jakarta.validation.Valid;
-import lk.ijse.pos.dto.CustomerDTO;
 import lk.ijse.pos.dto.OrderDTO;
 import lk.ijse.pos.exception.InvalidException;
 import lk.ijse.pos.service.OrderService;
-import lk.ijse.pos.util.RegexValidator;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 /**
  * Created By shamodha_s_rathnamalala
@@ -23,11 +24,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class OrderController {
     private final OrderService orderService;
-    private final RegexValidator regexValidator;
 
-    public OrderController(OrderService orderService, RegexValidator regexValidator) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.regexValidator = regexValidator;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,9 +34,8 @@ public class OrderController {
         System.out.println(orderDTO);
         System.out.println(errors);
         if (errors.hasFieldErrors())
-            throw new InvalidException(errors.getFieldErrors().get(0).getDefaultMessage());
-//        return new ResponseEntity<>(orderService.saveOrder(orderDTO), HttpStatus.CREATED);
-        return null;
+            throw new InvalidException(errors.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList().toString());
+        return new ResponseEntity<>(orderService.saveOrder(orderDTO), HttpStatus.CREATED);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +57,7 @@ public class OrderController {
     @PatchMapping(value = "{orderId}")
     ResponseEntity<?> updateCustomer(@PathVariable String orderId, @Valid @RequestBody OrderDTO orderDTO, Errors errors) {
         if (errors.hasFieldErrors())
-            throw new InvalidException(errors.getFieldErrors().get(0).getDefaultMessage());
+            throw new InvalidException(errors.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList().toString());
         orderDTO.setOrderId(orderId);
         orderService.updateOrder(orderDTO);
         return new ResponseEntity<>("Order " + orderId + " is updated", HttpStatus.OK);
