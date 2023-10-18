@@ -74,6 +74,7 @@ public class OrderServiceImpl implements OrderService {
                     orderDetailsDao.findById(new OrderItemPK(orderDetailsDTO.getOrderId(), orderDetailsDTO.getItemCode())).ifPresentOrElse(orderDetails -> {
                         orderDetails.setQty(orderDetailsDTO.getQty());
                         orderDetails.setUnitPrice(orderDetailsDTO.getUnitPrice());
+                        orderDao.save(order);
                     }, () -> {
                         throw new NotFoundException("Order Details not found..!");
                     });

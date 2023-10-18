@@ -58,6 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setName(customerDTO.getName());
                 customer.setSalary(customerDTO.getSalary());
                 customer.setAddress(customerDTO.getAddress());
+                customerDao.save(customer);
             }, () -> {
                 throw new NotFoundException("Customer not found..!");
             });

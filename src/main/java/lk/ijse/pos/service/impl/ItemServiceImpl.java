@@ -57,6 +57,7 @@ public class ItemServiceImpl implements ItemService {
                 item.setDescription(itemDTO.getDescription());
                 item.setQtyOnHand(itemDTO.getQtyOnHand());
                 item.setUnitPrice(itemDTO.getUnitPrice());
+                itemDao.save(item);
             }, () -> {
                 throw new NotFoundException("Item not found..!");
             });
